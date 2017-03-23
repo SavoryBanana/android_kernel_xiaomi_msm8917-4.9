@@ -486,7 +486,7 @@ static int __init msm_cpufreq_probe(struct platform_device *pdev)
 	char clk_name[] = "cpu??_clk";
 	char tbl_name[] = "qcom,cpufreq-table-??";
 	struct clk *c;
-	int cpu;
+	int cpu, ret;
 	struct cpufreq_frequency_table *ftbl;
 
 	l2_clk = devm_clk_get(dev, "l2_clk");
@@ -553,7 +553,15 @@ static int __init msm_cpufreq_probe(struct platform_device *pdev)
 		per_cpu(freq_table, cpu) = ftbl;
 	}
 
-	return 0;
+	ret = register_pm_notifier(&msm_cpufreq_pm_notifier);
+	if (ret)
+		return ret;
+
+	ret = cpufreq_register_driver(&msm_cpufreq_driver);
+	if (ret)
+		unregister_pm_notifier(&msm_cpufreq_pm_notifier);
+
+	return ret;
 }
 
 static struct of_device_id match_table[] = {
@@ -592,8 +600,7 @@ static int __init msm_cpufreq_register(void)
 		return rc;
 	}
 
-	register_pm_notifier(&msm_cpufreq_pm_notifier);
-	return cpufreq_register_driver(&msm_cpufreq_driver);
+	return 0;
 }
 
 subsys_initcall(msm_cpufreq_register);
