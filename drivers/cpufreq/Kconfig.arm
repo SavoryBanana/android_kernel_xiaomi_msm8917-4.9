@@ -253,4 +253,4 @@ config CPU_FREQ_MSM
 	depends on CPU_FREQ && ARCH_MSM
 	default y
 	help
-	  This enables the CPUFreq driver for Qualcomm CPUs.
+	  This enables the CPUFreq driver for Qualcomm Technologies, Inc. CPUs.
