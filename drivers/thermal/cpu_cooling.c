@@ -906,7 +906,13 @@ __cpufreq_cooling_register(struct device_node *np,
 	int ret;
 	struct thermal_cooling_device_ops *cooling_ops;
 
-	table = cpufreq_frequency_get_table(cpumask_first(clip_cpus));
+	policy = cpufreq_cpu_get(cpumask_first(clip_cpus));
+	if (!policy) {
+		pr_debug("%s: CPUFreq policy not found\n", __func__);
+		return ERR_PTR(-EPROBE_DEFER);
+	}
+
+	table = policy->freq_table;
 	if (!table) {
 		pr_debug("%s: CPUFreq table not found\n", __func__);
 		return ERR_PTR(-EPROBE_DEFER);
