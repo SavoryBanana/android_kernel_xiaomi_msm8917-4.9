@@ -513,7 +513,7 @@ static int __init msm_cpufreq_probe(struct platform_device *pdev)
 	if (!IS_ERR(ftbl)) {
 		for_each_possible_cpu(cpu)
 			per_cpu(freq_table, cpu) = ftbl;
-		return 0;
+		goto out_register;
 	}
 
 	/*
@@ -553,6 +553,7 @@ static int __init msm_cpufreq_probe(struct platform_device *pdev)
 		per_cpu(freq_table, cpu) = ftbl;
 	}
 
+out_register:
 	ret = register_pm_notifier(&msm_cpufreq_pm_notifier);
 	if (ret)
 		return ret;
