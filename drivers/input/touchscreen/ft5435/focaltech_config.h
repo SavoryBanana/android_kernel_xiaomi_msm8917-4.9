@@ -58,7 +58,7 @@
 #define _FT3267     0x32670004
 #define _FT3367     0x33670004
 #define FTS_CHIP_TYPE   _FT5435
-#define FTS_DEBUG_EN                            1
+#define FTS_DEBUG_EN                            0
 #define FTS_MT_PROTOCOL_B_EN                    1
 #define FTS_REPORT_PRESSURE_EN                  0
 #define FTS_FORCE_TOUCH_EN                      0
