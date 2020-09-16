@@ -1809,7 +1809,7 @@ static int __init cpufreq_electron_init(void)
 }
 
 #ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_ELECTRON
-fs_initcall(cpufreq_electron_init);
+core_initcall(cpufreq_electron_init);
 #else
 module_init(cpufreq_electron_init);
 #endif
